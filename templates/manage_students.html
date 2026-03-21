@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Students</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        form input {
+            width: 100%;
+            padding: 8px;
+            margin: 6px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background: #0056b3;
+        }
+
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        table th {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+        }
+
+        table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        table tr:hover {
+            background: #f1f1f1;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            border: none;
+            padding: 6px 10px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background: #a71d2a;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Add Student Form -->
+    <div>
+        <h2>Add Student</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="flash {{ category }}" style="padding:10px; margin-bottom:10px; border-radius:5px; {% if category == 'error' %}background:#f8d7da; color:#721c24; border: 1px solid #f5c6cb;{% else %}background:#d4edda; color:#155724; border: 1px solid #c3e6cb;{% endif %}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="/add_student" method="POST">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="number" name="year" placeholder="Year" required>
+            <input type="text" name="contact" placeholder="Contact" required>
+            <input type="text" name="address" placeholder="Address" required>
+            <input type="number" name="dept_id" placeholder="Department ID" required>
+            <input type="number" name="hostel_id" placeholder="Hostel ID" required>
+            <button type="submit">Add Student</button>
+        </form>
+    </div>
+
+    <!-- Student Table -->
+    <div style="flex:1;">
+        <h2>All Students</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Year</th>
+        <th>Contact</th>
+        <th>Address</th>
+        <th>Hostel</th>
+        <th>Room</th>
+        <th>Action</th>
+    </tr>
+
+    {% for s in students %}
+    <tr>
+        <td>{{ s[0] }}</td>
+        <td>{{ s[1] }}</td>
+        <td>{{ s[2] }}</td>
+        <td>{{ s[3] }}</td>
+        <td>{{ s[4] }}</td>
+        <td>{{ s[5] if s[5] else 'Not Assigned' }}</td>
+        <td>{{ s[6] if s[6] else 'Not Allocated' }}</td>
+        <td>
+            <a href="/delete_student/{{ s[0] }}">
+                <button class="delete-btn">Delete</button>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+    </div>
+
+</div>
+
+</body>
+</html>

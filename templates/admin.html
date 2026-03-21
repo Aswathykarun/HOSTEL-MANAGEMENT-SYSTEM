@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Admin Panel</title>
 </head>
+
 <body>
 
-<h2>Admin Dashboard</h2>
+    <h2>Admin Dashboard</h2>
 
-<h3>Student Management</h3>
-<button onclick="addStudent()">Add Student</button>
-<button>View Students</button>
-<button>Edit Student</button>
-<button>Delete Student</button>
+    <h3>Student Management</h3>
+    <!-- go to manage_students.html -->
+    <a href="/students"><button>manage Student</button></a>
 
-<h3>Warden Management</h3>
-<button>Add Warden</button>
-<button>Edit Warden</button>
-<button>Delete Warden</button>
+    <h3>Warden Management</h3>
+    <!-- go to manage_warden.html -->
+    <a href="/wardens"><button class="allocate">View Wardens</button></a>
 
-<h3>Monitoring</h3>
-<button>View Room Allocation</button>
-<button>View Hostel Details</button>
+    <h3>Monitoring</h3>
+    <a href="/room_allocation"><button>Allocate Room</button></a>
+    <a href="/view_hostels"><button>View Hostel Details</button></a>
 
-<h3>Notice Management</h3>
-<button onclick="postNotice()">Post Notice</button>
+    <h3>Notice Management</h3>
+    <a href="/add_notice"><button>Post Notice</button></a>
 
-<script src="/static/script.js"></script>
+    <br><br>
+    <hr>
+    <br>
+    <a href="/logout"><button style="background-color: #e05c5c; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">Logout</button></a>
+
+    <script src="/static/script.js"></script>
 
 </body>
+
 </html>

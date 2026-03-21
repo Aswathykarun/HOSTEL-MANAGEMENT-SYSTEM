@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Profile</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 500px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[readonly] {
+            background: #eee;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .success-popup {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Student Profile</h2>
+
+    <form id="profileForm">
+
+        <!-- STUDENT DETAILS -->
+        <label>Student ID</label>
+        <input type="text" id="student_id" value="{{ student.student_id }}" readonly>
+
+        <label>Name</label>
+        <input type="text" value="{{ student.student_name }}" readonly>
+
+        <label>Department</label>
+        <input type="text" value="{{ student.department_name }}" readonly>
+
+        <label>Year</label>
+        <input type="text" value="{{ student.year_of_study }}" readonly>
+
+        <label>Phone Number</label>
+        <input type="text" id="phone" value="{{ student.contact_number }}">
+
+        <label>Address</label>
+        <textarea id="address">{{ student.address }}</textarea>
+
+        <hr>
+
+        <!-- HOSTEL DETAILS -->
+        <h3>Hostel Details</h3>
+
+        <label>Hostel Name</label>
+        <input type="text" value="{{ student.hostel_name }}" readonly>
+
+        <label>Hostel Type</label>
+        <input type="text" value="{{ student.hostel_type }}" readonly>
+
+        <hr>
+
+        <!-- ROOM DETAILS -->
+        <h3>Room Details</h3>
+
+        <label>Room Number</label>
+        <input type="text" value="{{ student.room_number }}" readonly>
+
+        <label>Room Type</label>
+        <input type="text" value="{{ student.room_type }}" readonly>
+
+        <button type="submit">Update Profile</button>
+
+    </form>
+</div>
+
+<div class="success-popup" id="popup">
+    Profile Updated Successfully!
+</div>
+
+<script>
+document.getElementById("profileForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const data = {
+        student_id: document.getElementById("student_id").value,
+        phone: document.getElementById("phone").value,
+        address: document.getElementById("address").value
+    };
+
+    fetch("/update_profile", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(response => {
+        if(response.success){
+            let popup = document.getElementById("popup");
+            popup.style.display = "block";
+
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 2000);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
